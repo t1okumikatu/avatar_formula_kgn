@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Robot Local Controller</title>
+    <style>
+        button { width: 100px; height: 50px; margin: 10px; font-size: 16px; cursor: pointer; }
+        #status { font-weight: bold; color: red; }
+    </style>
+</head>
+<body>
+    <h1>Robot Local Test Panel</h1>
+    <p>Status: <span id="status">Disconnected</span></p>
+    <button onclick="send('forward')">前進</button>
+    <button onclick="send('backward')">後退</button><br>
+    <button onclick="send('left')">左旋回</button>
+    <button onclick="send('right')">右旋回</button><br><br>
+    <button onclick="send('stop')" style="background-color: #ffcccc;">STOP</button>
+
+    <script>
+        // ロボットのIPアドレスを指定（SSHで使っているもの）
+        const ROBOT_IP = "192.168.11.26131"; 
+        const ws = new WebSocket(`ws://${ROBOT_IP}:8765`);
+
+        ws.onopen = () => {
+            document.getElementById('status').innerText = "Connected";
+            document.getElementById('status').style.color = "green";
+        };
+
+        ws.onclose = () => {
+            document.getElementById('status').innerText = "Disconnected";
+            document.getElementById('status').style.color = "red";
+        };
+
+        function send(action) {
+            // main.pyが解釈できる形式（cmd;robot;0;action）で送信
+            const msg = `cmd;robot;0;${action}`;
+            ws.send(msg);
+            console.log("Sent:", msg);
+        }
+    </script>
+</body>
+</html>

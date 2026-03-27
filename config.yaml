@@ -1,0 +1,25 @@
+lidar:
+  frontal_angle_degrees: 180
+#前方180度の範囲をスキャン対象としています。
+# Configuration for Robot and WebSocket
+robot_speed_rpm: 1600  # ロボットのモーター回転数（速度）のデフォルト値です。
+robot_loop_interval: 0.05  # 制御プログラムが1秒間に何回計算を行うか（周期）を設定します。0.05秒ごとなので、1秒間に20回制御命令を送る設定です。
+watchdog_count_max: 4  # 通信が途切れた際の安全装置（ウォッチドッグ）です。4回連続で信号が途絶えたら停止する、といった安全策に使われます。
+#ロボットをサーバーに接続するための情報です
+# WebSocket configuration
+websocket_url: "wss://ws.avatarchallenge.ca-platform.org"  # ロボットがリアルタイムでコマンドを受け取るための通信先アドレスです。
+api_login_url: "https://api.avatarchallenge.ca-platform.org/login/"  # org/clientLogin/"接続を開始する前にユーザー認証を行うための窓口です。
+api_credentials:
+  username: "keigan1-ca001"  # Your API username
+  password: "eiCa7too"    # Your API password
+  code: "keigan1"            # Your API code
+#ログインに必要なユーザー名、パスワード、コードが記載されています。
+# Robot hardware configuration
+robot_device_1: "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_B0001KJH-if00-port0"
+robot_device_2: "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_B003725S-if00-port0"
+
+# Lidar zones configuration (optional)
+lidar_zone_distances:
+  zone_1: 1.0  # Zone 1 (1.0m): 注意。障害物を検知し始める距離
+  zone_2: 0.5  # Zone 2 (0.5m): 警戒。減速などのアクションを行う距離
+  zone_3: 0.2  # Zone 3 (0.2m): 危険。衝突防止のために緊急停止する距離、と考えられます。
